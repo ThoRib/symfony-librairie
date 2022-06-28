@@ -1,0 +1,13 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Edit LivreImage{% endblock %}
+
+{% block body %}
+    <h1>Edit LivreImage</h1>
+
+    {{ include('admin_livre_image/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_livre_image_index') }}">back to list</a>
+
+    {{ include('admin_livre_image/_delete_form.html.twig') }}
+{% endblock %}

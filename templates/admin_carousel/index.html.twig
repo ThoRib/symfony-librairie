@@ -1,0 +1,47 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Carousels{% endblock %}
+
+{% block body %}
+    <h1>Carousels</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Texte</th>
+                <th>Modifié le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carousel in carousels %}
+            <tr>
+                <td>{{ carousel.id }}</td>
+                <td>
+                    {% if carousel.imageName is defined and carousel.imageName is not null %}
+                    <img src="{{ asset('images/carousels/' ~ carousel.imageName )}}" alt="" class="img-list">
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>{{ carousel.titre }}</td>
+                <td>{{ carousel.texte }}</td>
+                <td>{{ carousel.updatedAt ? carousel.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_carousel_show', {'id': carousel.id}) }}" class="btn btn-dark"><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_carousel_edit', {'id': carousel.id}) }}" class="btn btn-success ms-2"><i class="align-middle" data-feather="pen-tool"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Pas d'enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_carousel_new') }}" class="btn btn-success">Nouveau</a>
+{% endblock %}

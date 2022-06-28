@@ -1,0 +1,44 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Images des Livres{% endblock %}
+
+{% block body %}
+    <h1>Images des Livres</h1>
+    <a href="{{ path('app_admin_livre_image_new') }}" class="btn btn-dark">Nouveau</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Mise à jour</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livre_image in livre_images %}
+            <tr>
+                <td>{{ livre_image.id }}</td>
+                <td>
+                {% if livre_image.imageName is defined and livre_image.imageName is not null %}
+                <img src="{{ asset('images/livres/' ~ livre_image.imageName) }}" alt="" class="img-list">
+                {% else %}
+                    N/A
+                {% endif %}
+                </td>
+                <td>{{ livre_image.nom }}</td>
+                <td>{{ livre_image.updatedAt ? livre_image.updatedAt|date('d-m-Y H:i:s') : 'N/A' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_livre_image_show', {'id': livre_image.id}) }}" class="btn btn-dark"><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_livre_image_edit', {'id': livre_image.id}) }}" class="btn btn-success ms-2"><i class="align-middle" data-feather="pen-tool"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Pas d'enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

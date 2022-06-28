@@ -1,0 +1,37 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Image de Livre{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_admin_livre_image_index') }}" class="btn btn-dark mt-2">retour à la liste</a>
+    <h1>Image de Livre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ livre_image.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ livre_image.nom }}</td>
+            </tr>
+            <tr>
+                <th>Mise à jour</th>
+                <td>{{ livre_image.updatedAt ? livre_image.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                {% if livre_image.imageName is defined and livre_image.imageName is not null %}
+                <img src="{{ asset('images/livres/' ~ livre_image.imageName) }}" alt="" class="planche">
+                {% else %}
+                    N/A
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_livre_image_edit', {'id': livre_image.id}) }}" class="btn btn-success ms-2"><i class="align-middle" data-feather="pen-tool"></i></a>
+
+    {{ include('admin_livre_image/_delete_form.html.twig') }}
+{% endblock %}

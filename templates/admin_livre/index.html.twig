@@ -1,0 +1,57 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Les Livre{% endblock %}
+
+{% block body %}
+    <h1>Les Livres</h1>
+    <a href="{{ path('app_admin_livre_new') }}" class="btn btn-dark">Nouveau</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Mise à jour</th>
+                <th>Prix</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livre in livres %}
+            <tr>
+                <td>{{ livre.id }}</td>
+                <td>
+                    {% if livre.imageName is defined and livre.imageName is not null %}
+                    <a href="{{ asset('images/livres/' ~ livre.imageName) }}" data-lightbox="image-{{ loop.index }}" data-title="{{ livre.titre }}">
+                    <img src="{{ asset('images/livres/' ~ livre.imageName) }}" alt="" class="img-list">
+                    {% else %}
+                    N∕A
+                    {% endif %} 
+                </td>
+                <td>{{ livre.titre }}</td>
+                {# <td>{{ dump(livre) }}</td> #}
+                <td>{{ (livre.categorie.nom) }}</td>
+                <td>{{ livre.updatedAt ? livre.updatedAt|date('d-m-Y H:i:s') : 'N/A' }}</td>
+                <td>
+                    {% if livre.prix is defined and livre.prix is not null %}
+                    {{ livre.prix }}
+                    {% else %}
+                    N∕A
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <a href="{{ path('app_admin_livre_show', {'id': livre.id}) }}" class="btn btn-dark"><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}" class="btn btn-success ms-2"><i class="align-middle" data-feather="pen-tool"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Auncun livre trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
