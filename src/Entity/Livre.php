@@ -87,10 +87,16 @@ class Livre
      */
     private $livreImages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoris")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
         $this->livreImages = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
 // ====================================================== //
@@ -269,6 +275,33 @@ class Livre
     {
         if ($this->livreImages->removeElement($livreImage)) {
             $livreImage->removeLivre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFavori($this);
         }
 
         return $this;

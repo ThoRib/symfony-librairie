@@ -13,6 +13,9 @@
                 <div class="align-self-end mb-3">
                     <img src="{{ asset('images/livres/' ~ livre.imageName) }}" alt="{{ livre.titre }}" class="img-fluid">
                     <a href="{{ path('app_categorie_show_livre', {'slug':categories.slug, 'id':livre.id}) }}" class="btn btn-dark my-4">Voir le détail</a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('add_favoris', {'id': livre.id}) }}" class="btn btn-warning">Ajouter aux favoris</a>
+                    {% endif %}
                 </div> 
             </div>
         {% endfor %}
